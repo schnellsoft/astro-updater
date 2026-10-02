@@ -112,6 +112,20 @@ export async function saveToCloud(
       }),
     );
 
+    const deployHookUrl = process.env.CLOUDFLARE_DEPLOY_HOOK_URL;
+    if (deployHookUrl) {
+      // Fire-and-forget: a failed rebuild trigger shouldn't fail the upload.
+      try {
+        await fetch(deployHookUrl, { method: "POST" });
+      } catch {
+        return {
+          error: null,
+          success:
+            "dogs.json was uploaded, but triggering the Cloudflare rebuild failed.",
+        };
+      }
+    }
+
     return { error: null, success: "dogs.json was uploaded to Cloudflare R2." };
   } catch {
     return { error: "Upload to R2 failed. Please try again.", success: null };
