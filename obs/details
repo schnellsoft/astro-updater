@@ -1,0 +1,94 @@
+Read
+
+Read
+
+Read
+
+Read
+
+Read
+
+Read
+
+Read
+
+Analyzing your answers...
+
+Now implementing: install the SDK, add a server action, a client button component, `.env.example`, and wire it into `page.tsx`.
+
+Ran terminal command: npm install @aws-sdk/client-s3
+
+Now let's add the server action for uploading, plus the client button, `.env.example`, and gitignore check.
+
+Read , lines 1 to 40
+
+`.env*` is already ignored. Now add the R2 upload server action.
+
+Created
+
+Replacing 10 lines with 19 lines in
+
+```
+
+```
+
+Replacing 7 lines with 35 lines in
+
+```
+
+```
+
+Now the client component for the button:
+
+Created
+
+Replacing 1 lines with 3 lines in
+
+```
+
+```
+
+Now wire the button into `page.tsx` next to the directory heading, and add env file.
+
+Replacing 4 lines with 5 lines in
+
+Replacing 9 lines with 10 lines in
+
+```
+
+```
+
+```
+
+```
+
+Created
+
+Now add minimal CSS for the new button/form, matching existing style conventions.
+
+Searched for regex `directory-heading|dog-count|add-button|form-feedback` (`**/app/globals.css`), 9 results
+
+Read , lines 190 to 255
+
+Replacing 7 lines with 34 lines in
+
+```
+
+```
+
+Now verify everything builds/lints cleanly.
+
+Checked , , , , no problems found
+
+No type errors. Summary of changes:
+
+- `r2.ts` — creates an `S3Client` pointed at your R2 account endpoint using `R2_ACCOUNT_ID`/`R2_ACCESS_KEY_ID`/`R2_SECRET_ACCESS_KEY`.
+- `actions.ts` — added `saveToCloud` server action that reads `dogs.json` and `PutObjectCommand`s it to `R2_BUCKET_NAME` under `R2_OBJECT_KEY` (default `dogs.json`).
+- `save-to-cloud-button.tsx` — client component using `useActionState` for pending/success/error feedback, same pattern as `add-dog-form.tsx`.
+- `page.tsx` — button placed next to the "The dogs" heading.
+- `globals.css` — minor styles for the new button.
+- `.env.example` — documents the required env vars (`.env*` is already gitignored).
+
+To use it, create `.env.local` from `.env.example` with your Cloudflare R2 credentials and bucket name.
+
+Made changes.
